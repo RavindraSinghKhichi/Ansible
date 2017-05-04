@@ -1,0 +1,7 @@
+
+instance_type: t2.micro
+ami_id: ami-efd0428f
+group_name: All-Allowed
+count: 1
+subnet_id: subnet-ab51f4e2
+region: us-west-2  

@@ -1,0 +1,42 @@
+---
+#including yml variable file 
+#- include: cred.yml
+#- include: instance_details.yml
+
+- name: Stage instance(s)
+  hosts: all
+  connection: local
+  remote_user: root
+  gather_facts: false
+
+  vars_files:
+    - cred.yml
+    - instance_details.yml
+
+  tasks:
+# Basic provisioning example
+#way 2 to include the var files
+  #----------------------------
+  #  - name: creds
+  #    include_vars: cred.yml
+
+  #  - name: instance_details
+  #    include_vars: instance_details.yml
+  #---------------------------------------
+#way2 to include the var files
+
+
+    - debug:
+        msg: "{{ aws_access_key }}"
+    - name: Launch Instance
+      ec2:
+        aws_access_key: "{{aws_access_key}}"
+        aws_secret_key: "{{aws_secret_key}}"
+        instance_type: "{{instance_type}}"
+        image: "{{ami_id}}"
+        region: "{{region}}"
+        wait: yes
+        group: "{{group_name}}"
+        count: "{{count}}"
+        vpc_subnet_id: "{{subnet_id}}"
+        assign_public_ip: yes
